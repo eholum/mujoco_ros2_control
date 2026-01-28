@@ -1,6 +1,8 @@
 <mujoco model="two_dof_robot">
   <compiler angle="radian" meshdir="assets/" texturedir="assets/"/>
   <worldbody>
+    <!-- Floor -->
+    <geom name="floor" type="plane" size="5 5 0.1" rgba="0.8 0.8 0.8 1"/>
     <body name="upperarm">
       <inertial pos="0.5 0 0" quat="0.5 0.5 0.5 0.5" mass="27" diaginertia="0.225 0.225 0.0225"/>
       <joint name="joint1" pos="0 0 0" axis="0 0 1" range="-3.14 3.14" actuatorfrcrange="-1000 1000" frictionloss="1.0" damping="2.0"/>
@@ -40,6 +42,17 @@
       <geom size="0.5 0.05 0.05" pos="0.5 0 0" type="box" rgba="1 0 0 1" class="visual"/>
       <site name="upperarm" pos="0 0 0" quat="1.0 0 0 0"/>
     </body>
+    <!-- Free-floating boxes for funsies -->
+    <body name="free_box1" pos="0 1.0 0.5">
+      <freejoint name="freejoint1" />
+      <inertial pos="0 0 0" mass="1.0" diaginertia="0.01 0.01 0.01"/>
+      <geom size="0.1 0.1 0.1" type="box" rgba="1 1 0 1"/>
+    </body>
+    <body name="free_box2" pos="0 -1.0 0.5">
+      <freejoint name="freejoint2" />
+      <inertial pos="0 0 0" mass="1.0" diaginertia="0.01 0.01 0.01"/>
+      <geom size="0.1 0.1 0.1" type="box" rgba="0 1 1 1"/>
+    </body>
     <site name="world" pos="0 0 0" quat="1.0 0 0 0"/>
     <site name="base" pos="0 0 0" quat="1.0 0 0 0"/>
     <site name="lidar_sensor_frame" pos="1.0 2.0 0" quat="0.7071054825112363 0 0 -0.7071080798594737"/>
@@ -76,6 +89,10 @@
     <rangefinder name="lidar" site="rf"/>
   </sensor>
   <keyframe>
-    <key name="start_90" time="422.274" qpos="1.57 -1.57 -0.02 0.02" qvel="0 0 0 0" ctrl="1.57 -1.57 -0.02"/>
+     <key name="start_90" time="422.274"
+       qpos="1.57 -1.57 -0.02 0.02 0 1.0 0.5 1 0 0 0 0 -1.0 0.5 1 0 0 0"
+       qvel="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+       ctrl="1.57 -1.57 -0.02"
+      />
   </keyframe>
 </mujoco>
